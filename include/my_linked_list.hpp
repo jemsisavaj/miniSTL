@@ -2,65 +2,59 @@
 #define MY_LINKED_LIST_HPP
 
 #include <iostream>
-using namespace std;
 
 template <typename T>
 struct Node {
     T data;
     Node* next;
 
-    Node(T val){
-        data = val;
-        next = nullptr;
-    }
+    Node(T val) : data(val), next(nullptr) {}
 };
 
 template <typename T>
 class MyLinkedList {
-public: 
+public:
     Node<T>* head;
     Node<T>* tail;
     int size;
 
-    MyLinkedList(){
+    MyLinkedList() {
         head = nullptr;
         tail = nullptr;
         size = 0;
     }
 
-    void push_front(T val){
+    void push_front(T val) {
         Node<T>* newNode = new Node<T>(val);
-        if(head == nullptr){
+        if (head == nullptr) {
             head = tail = newNode;
-        }
-        else{
+        } else {
             newNode->next = head;
             head = newNode;
         }
         size++;
     }
 
-    void push_back(T val){
+    void push_back(T val) {
         Node<T>* newNode = new Node<T>(val);
-        if(head == nullptr){
+        if (head == nullptr) {
             head = tail = newNode;
-        }
-        else{
-            tail->next = newNode;
-            tail = newNode;
+        } else {
+            tail->next = newNode; 
+            tail = newNode;    
         }
         size++;
     }
 
-    void pop_front(){
-        if(head == nullptr) return;
+    void pop_front() {
+        if (head == nullptr) return;
 
         Node<T>* temp = head;
         head = head->next;
         delete temp;
         size--;
 
-        if(head == nullptr){
+        if (head == nullptr) {
             tail = nullptr;
         }
     }
@@ -77,17 +71,8 @@ public:
         return curr->data;
     }
 
-    bool empty(){
+    bool empty() const {
         return size == 0;
-    }
-
-    void print(){
-        Node<T>* curr = head;
-        while(curr != nullptr){
-            cout << curr->data << " -> ";
-            curr = curr->next;
-        }
-        cout << "NULL" << endl;
     }
 };
 
