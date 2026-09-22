@@ -10,6 +10,32 @@ public:
     int size;
     int capacity;
 
+    ~MyVector() {
+        delete[] arr;
+    }
+
+    MyVector(const MyVector& other) {
+        capacity = other.capacity;
+        size = other.size;
+        arr = new T[capacity];
+        for (int i = 0; i < size; i++) {
+            arr[i] = other.arr[i];
+        }
+    }
+
+    MyVector& operator=(const MyVector& other) {
+        if (this != &other) {
+            delete[] arr; 
+            capacity = other.capacity;
+            size = other.size;
+            arr = new T[capacity];
+            for (int i = 0; i < size; i++) {
+                arr[i] = other.arr[i];
+            }
+        }
+        return *this;
+    }
+
     MyVector(){
         capacity = 1;
         size = 0;

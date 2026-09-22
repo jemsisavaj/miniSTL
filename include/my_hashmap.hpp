@@ -57,6 +57,9 @@ public:
 
     //Add and update Key-Value 
     void put(K key, V value) {
+        if ((float)current_size / capacity >= 0.75) {
+            rehash();
+        }
         int index = getHashIndex(key);
         HashNode<K, V>* curr = buckets[index];
 
@@ -118,6 +121,30 @@ public:
 
     bool empty() const {
         return current_size == 0;
+    }
+
+    //rehash
+    void rehash() {
+        int oldCapacity = capacity;
+        capacity *= 2;
+        HashNode<K, V>** oldBuckets = buckets;
+
+        buckets = new HashNode<K, V>*[capacity];
+        for (int i = 0; i < capacity; i++) {
+            buckets[i] = nullptr;
+        }
+
+        current_size = 0;
+        for (int i = 0; i < oldCapacity; i++) {
+            HashNode<K, V>* curr = oldBuckets[i];
+            while (curr != nullptr) {
+                put(curr->key, curr->value); 
+                HashNode<K, V>* temp = curr;
+                curr = curr->next;
+                delete temp;
+            }
+        }
+        delete[] oldBuckets;
     }
 };
 

@@ -74,6 +74,15 @@ public:
     bool empty() const {
         return size == 0;
     }
+
+    void print() const {
+        Node<T>* curr = head;
+        while (curr != nullptr) {
+            std::cout << curr->data << " -> ";
+            curr = curr->next;
+        }
+        std::cout << "NULL" << std::endl;
+    }
 };
 
 #endif
